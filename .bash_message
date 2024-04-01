@@ -1,0 +1,12 @@
+clear
+
+printf "\n"
+printf "%s\n" "Welcome back, enjoy your day."
+printf "\n"
+printf "%s\n" "User: $(echo $USER)"
+printf "%s\n" "Date: $(date)"
+printf "%s\n" "Uptime: $(uptime -p)"
+printf "%s\n" "Kernel: $(uname -rms)"
+printf "%s\n" "Resolution: $(xrandr | awk '/\*/{printf $1" "}')"
+printf "%s\n" "Memory: $(free -m -h | awk '/Mem/{print $3"/"$2}')"
+printf "\n"

@@ -1,0 +1,28 @@
+[alias]
+	st = status
+	co = checkout
+	br = branch
+	up = rebase
+	ci = commit
+	lg = log --graph --decorate --color --oneline
+	ld = log --pretty=medium --abbrev-commit --date=local --graph --decorate --color -p
+	diffc = diff --color
+	ls = ls-tree 
+	ca = cat-file -p
+	la = log --graph --pretty=format:'%Cred%h%Creset -%C(bold cyan)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=short --graph 
+	tg = tag -l -n1
+	bran = branch -a
+	rem = remote -v
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[push]
+	default = simple
+[commit]
+  	template = ~/.gitmessage
+[core]
+	excludesfile = ~/.gitignore_global
+[init]
+	defaultBranch = main

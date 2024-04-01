@@ -1,0 +1,114 @@
+-- vim: ts=4 sw=4 noet ai cindent syntax=lua
+--[[
+Conky, a system monitor, based on torsmo
+
+Any original torsmo code is licensed under the BSD license
+
+All code written since the fork of torsmo is licensed under the GPL
+
+Please see COPYING for details
+
+Copyright (c) 2004, Hannu Saransaari and Lauri Hakkarainen
+Copyright (c) 2005-2012 Brenden Matthews, Philip Kovacs, et. al. (see AUTHORS)
+All rights reserved.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+]]
+-- see: http://conky.sourceforge.net/variables.html
+conky.config = {
+    alignment = 'top_right',
+    background = false,
+    border_width = 1,
+    cpu_avg_samples = 2,
+	default_color = 'white',
+    default_outline_color = 'white',
+    default_shade_color = 'white',
+    draw_borders = false,
+    draw_graph_borders = true,
+    draw_outline = false,
+    draw_shades = false,
+    use_xft = true,
+    font = 'DejaVu Sans Mono:size=12',
+    gap_x = 10,
+    gap_y = 35,
+    minimum_height = 5,
+	minimum_width = 5,
+    net_avg_samples = 2,
+    no_buffers = true,
+    out_to_console = false,
+    out_to_stderr = false,
+    extra_newline = false,
+    own_window = true,
+    own_window_class = 'Conky',
+    own_window_type = 'normal',
+    own_window_argb_visual = true,
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    own_window_transparent = false,
+    own_window_argb_value = 25,
+    stippled_borders = 0,
+    update_interval = 1.0,
+    uppercase = false,
+    use_spacer = 'none',
+    show_graph_scale = false,
+    show_graph_range = false
+}
+
+conky.text = [[
+${color white}RAM$hr
+${color grey} RAM Usage:$color $mem/$memmax - $memperc% ${membar 4}
+${color grey} Swap Usage:$color $swap/$swapmax - $swapperc% ${swapbar 4}
+${color white}CPU$hr
+${color grey} CPU Usage:$color $cpu% ${cpubar 4}
+${color grey} Ivy Bridge CPU Temp (100°C max):$color $alignr ${hwmon 2 temp 1} °C
+${color grey} Skylake CPU Temp (100°C max):$color $alignr ${hwmon 0 temp 1} °C
+${color grey} Processes:$color $processes  ${color grey} Running:$color $running_processes
+${color grey} CPU1:$color ${cpu cpu1}% $alignr ${exec awk '/cpu MHz/{i++}i==1{printf "%.f",$4; exit}' /proc/cpuinfo} MHz ${cpubar cpu1 8,60}
+${color grey} CPU2:$color ${cpu cpu2}% $alignr ${exec awk '/cpu MHz/{i++}i==2{printf "%.f",$4; exit}' /proc/cpuinfo} MHz ${cpubar cpu2 8,60}
+${color grey} CPU3:$color ${cpu cpu3}% $alignr ${exec awk '/cpu MHz/{i++}i==3{printf "%.f",$4; exit}' /proc/cpuinfo} MHz ${cpubar cpu3 8,60}
+${color grey} CPU4:$color ${cpu cpu4}% $alignr ${exec awk '/cpu MHz/{i++}i==4{printf "%.f",$4; exit}' /proc/cpuinfo} MHz ${cpubar cpu4 8,60}
+${color grey} CPU5:$color ${cpu cpu5}% $alignr ${exec awk '/cpu MHz/{i++}i==5{printf "%.f",$4; exit}' /proc/cpuinfo} MHz ${cpubar cpu5 8,60}
+${color grey} CPU6:$color ${cpu cpu6}% $alignr ${exec awk '/cpu MHz/{i++}i==6{printf "%.f",$4; exit}' /proc/cpuinfo} MHz ${cpubar cpu6 8,60}
+${color grey} CPU7:$color ${cpu cpu7}% $alignr ${exec awk '/cpu MHz/{i++}i==7{printf "%.f",$4; exit}' /proc/cpuinfo} MHz ${cpubar cpu7 8,60}
+${color grey} CPU8:$color ${cpu cpu8}% $alignr ${exec awk '/cpu MHz/{i++}i==8{printf "%.f",$4; exit}' /proc/cpuinfo} MHz ${cpubar cpu8 8,60}
+${color grey} CPU9:$color ${cpu cpu9}% $alignr ${exec awk '/cpu MHz/{i++}i==9{printf "%.f",$4; exit}' /proc/cpuinfo} MHz ${cpubar cpu5 8,60}
+${color grey} CPU10:$color ${cpu cpu10}% $alignr ${exec awk '/cpu MHz/{i++}i==10{printf "%.f",$4; exit}' /proc/cpuinfo} MHz ${cpubar cpu6 8,60}
+${color grey} CPU11:$color ${cpu cpu11}% $alignr ${exec awk '/cpu MHz/{i++}i==11{printf "%.f",$4; exit}' /proc/cpuinfo} MHz ${cpubar cpu7 8,60}
+${color grey} CPU12:$color ${cpu cpu12}% $alignr ${exec awk '/cpu MHz/{i++}i==12{printf "%.f",$4; exit}' /proc/cpuinfo} MHz ${cpubar cpu8 8,60}
+${color grey}Processes:$color $processes  ${color grey}Running:$color $running_processes
+${color white}GPU ${exec nvidia-smi --query-gpu=name --format=csv,noheader,nounits}$hr
+${color grey} NVIDIA display driver version: $color $alignr ${exec nvidia-smi --query-gpu=driver_version --format=csv,noheader,nounits}
+#${color grey} Performance state 0(max) to 12(min): $color $alignr ${execi 10 nvidia-smi --query-gpu=pstate --format=csv,noheader,nounits}
+#${color grey} PCI-E link generation: $color $alignr Current: ${execi 60 nvidia-smi --query-gpu=pcie.link.gen.current --format=csv,noheader,nounits} - Max: ${exec nvidia-smi --query-gpu=pcie.link.gen.max --format=csv,noheader,nounits}
+${color grey} Temperature (96-99-104): $color ${execi 1 nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader,nounits} °C $alignr ${color grey} Power: $alignr $color ${execi 1 nvidia-smi --query-gpu=power.draw --format=csv,noheader,nounits} W
+${color grey} GPU Utilization: $color ${execi 1 nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits} % $alignr ${color grey} GPU 1 sec: $color ${execi 1 nvidia-smi --query-gpu=utilization.memory --format=csv,noheader,nounits} %
+${color grey} Memory Utilization: $color $alignr ${execi 1 nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits}MB/${execi 1 nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits}MB - ${execi 1 echo "scale=0; 100*$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits)/$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits)" | bc -q} %
+ ${color grey}$color${execibar 1 echo "scale=0; 100*$(nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits)/$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits)" | bc -q} %
+${color white}File systems$hr
+${color grey} /     $color${fs_used /}/${fs_size /}  ${fs_bar 6 /}
+${color grey} /home $color${fs_used /home}/${fs_size /home}   ${fs_bar 6 /home}
+${color white}Networking$hr
+${color grey}Up:$color ${upspeed wlan0} ${color grey} - Down:$color ${downspeed wlan0}
+${color grey}Public IP: $color ${texeci 3600 wget http://ipinfo.io/ip -o /dev/null -qO -}
+${color grey}wlan0 IP: $color ${addr wlan0}
+${color grey}wlan0 MAC: $color ${texeci 3600 ifconfig wlan0 | awk '/ether/{print $2}'} ${if_match "c4:85:08:46:e1:a0" == "${texeci 300 ifconfig wlan0 | awk '/ether/{print $2}'}"}${color red}Not spoofing${endif} 
+${color white}Proccess$hr
+${color grey}Name              PID   CPU%   MEM%
+${color lightgrey} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
+${color lightgrey} ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
+${color lightgrey} ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
+${color lightgrey} ${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}
+${color white}Investment$hr
+${color grey}$color ${texeci 1800 curl -s "https://api.coinmarketcap.com/v1/ticker/Bitcoin/" | python3 -c "import sys, json; data = json.load(sys.stdin); print('BTC: ', data[0]['price_usd'], ' - 24h %:', data[0]['percent_change_24h'])"}${if_match 8000.0 > ${texeci 1800 curl -s https://api.coinbase.com/v2/prices/BTC-USD/buy | python3 -c "import sys, json; print(json.load(sys.stdin)['data']['amount'])"}}${color red}BUY${endif}
+${color grey}$color ${texeci 1800 curl -s https://api.coinmarketcap.com/v1/ticker/ethereum/ | python3 -c "import sys, json; data = json.load(sys.stdin); print('ETH: ', data[0]['price_usd'], ' - 24h %:', data[0]['percent_change_24h'])"}
+${color grey}$color ${exec figlet -f small "Just do it"}
+]]
